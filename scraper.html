@@ -1,0 +1,1158 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<title>VK Audio Dashboard</title>
+	<link rel="preconnect" href="https://fonts.googleapis.com" />
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+	<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet" />
+	<style>
+		:root {
+			--bg: #f8f4ea;
+			--card: #fffdfa;
+			--ink: #102a43;
+			--muted: #5f6c7b;
+			--accent: #0f766e;
+			--accent-2: #c2410c;
+			--line: #d9d1c3;
+			--ok: #18794e;
+			--warn: #b54708;
+			--error: #b42318;
+		}
+
+		* {
+			box-sizing: border-box;
+		}
+
+		body {
+			margin: 0;
+			color: var(--ink);
+			background:
+				radial-gradient(1000px 500px at -10% -20%, #f7dba7 0%, transparent 60%),
+				radial-gradient(1200px 600px at 110% -30%, #bee3db 0%, transparent 62%),
+				var(--bg);
+			font-family: "Space Grotesk", sans-serif;
+			min-height: 100vh;
+		}
+
+		.wrap {
+			width: min(1200px, 95vw);
+			margin: 24px auto 48px;
+		}
+
+		.shell {
+			display: grid;
+			grid-template-columns: 420px minmax(0, 1fr);
+			gap: 14px;
+			align-items: start;
+		}
+
+		.maincol {
+			display: grid;
+			gap: 14px;
+		}
+
+		.sidebar {
+			position: sticky;
+			top: 18px;
+			display: grid;
+			gap: 14px;
+		}
+
+		.footer {
+			margin-top: 14px;
+			display: grid;
+			grid-template-columns: minmax(0, 1fr) 360px 360px 380px;
+			gap: 14px;
+			align-items: stretch;
+		}
+
+		.footercard {
+			background: var(--card);
+			border: 1px solid var(--line);
+			border-radius: 14px;
+			padding: 14px;
+			box-shadow: 0 10px 20px rgba(16, 42, 67, 0.05);
+		}
+
+		.footergrid {
+			display: grid;
+			grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+			gap: 10px;
+		}
+
+		.footer-actions {
+			display: grid;
+			gap: 8px;
+		}
+
+		.action-row {
+			display: grid;
+			grid-template-columns: 88px 1fr auto;
+			gap: 8px;
+			align-items: center;
+			padding: 8px 10px;
+			border: 1px solid var(--line);
+			border-radius: 10px;
+			background: #fff;
+		}
+
+		.action-row code {
+			font-family: "IBM Plex Mono", monospace;
+			font-size: 0.75rem;
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
+		}
+
+		.install-row {
+			display: grid;
+			grid-template-columns: 72px 1fr auto;
+			gap: 8px;
+			align-items: center;
+			padding: 8px 10px;
+			border: 1px solid var(--line);
+			border-radius: 10px;
+			background: #fff;
+		}
+
+		.install-row code {
+			font-family: "IBM Plex Mono", monospace;
+			font-size: 0.75rem;
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
+		}
+
+		.job-row {
+			display: grid;
+			grid-template-columns: 64px 1fr 84px;
+			gap: 8px;
+			align-items: center;
+			padding: 8px 10px;
+			border: 1px solid var(--line);
+			border-radius: 10px;
+			background: #fff;
+		}
+
+		.job-row button {
+			padding: 6px 8px;
+			font-size: 0.8rem;
+		}
+
+		.log-box {
+			margin-top: 10px;
+			max-height: 230px;
+			overflow: auto;
+			background: #0b1320;
+			color: #dbeafe;
+			border-radius: 10px;
+			padding: 10px;
+			font-family: "IBM Plex Mono", monospace;
+			font-size: 0.75rem;
+			white-space: pre-wrap;
+		}
+
+		.hero {
+			display: grid;
+			gap: 14px;
+			background: linear-gradient(135deg, #0f766e, #155e75);
+			color: #f0fdfa;
+			border-radius: 18px;
+			padding: 22px;
+			box-shadow: 0 12px 24px rgba(15, 118, 110, 0.24);
+			transform: translateY(8px);
+			opacity: 0;
+			animation: reveal 0.65s ease forwards;
+		}
+
+		.player-dock {
+			background: linear-gradient(135deg, #081c2e, #0f2438 58%, #102a43);
+			color: #e2e8f0;
+			border-radius: 18px;
+			padding: 18px 20px;
+			box-shadow: 0 14px 30px rgba(8, 28, 46, 0.28);
+			border: 1px solid rgba(255, 255, 255, 0.08);
+			display: grid;
+			gap: 10px;
+		}
+
+		.player-dock .meta {
+			display: flex;
+			justify-content: space-between;
+			gap: 10px;
+			flex-wrap: wrap;
+			align-items: center;
+		}
+
+		.player-dock .title {
+			font-size: 1rem;
+			font-weight: 700;
+		}
+
+		.player-dock .subtitle {
+			color: #94a3b8;
+			font-size: 0.88rem;
+		}
+
+		.player-dock .trackline {
+			font-family: "IBM Plex Mono", monospace;
+			font-size: 0.8rem;
+			color: #cbd5e1;
+			word-break: break-all;
+		}
+
+		.player-dock audio {
+			width: 100%;
+			margin-top: 4px;
+		}
+
+		.hero h1 {
+			margin: 0;
+			font-size: clamp(1.3rem, 3vw, 1.9rem);
+		}
+
+		.hero p {
+			margin: 0;
+			color: #ccfbf1;
+		}
+
+		.controls {
+			margin-top: 14px;
+			display: flex;
+			flex-wrap: wrap;
+			gap: 10px;
+			align-items: center;
+		}
+
+		button,
+		input,
+		select {
+			font: inherit;
+			border-radius: 10px;
+			border: 1px solid var(--line);
+			padding: 10px 12px;
+			background: #fff;
+			color: var(--ink);
+		}
+
+		button {
+			background: #083344;
+			color: #e0f2fe;
+			border: 1px solid #134e4a;
+			cursor: pointer;
+		}
+
+		button.alt {
+			background: #fff;
+			color: #1f2937;
+			border: 1px solid var(--line);
+		}
+
+		.stats {
+			display: grid;
+			grid-template-columns: 1fr;
+			gap: 10px;
+		}
+
+		.stat {
+			background: var(--card);
+			border: 1px solid var(--line);
+			border-radius: 12px;
+			padding: 12px;
+			transform: translateY(8px);
+			opacity: 0;
+			animation: reveal 0.55s ease forwards;
+		}
+
+		.panelcard {
+			background: var(--card);
+			border: 1px solid var(--line);
+			border-radius: 14px;
+			padding: 14px;
+			box-shadow: 0 10px 20px rgba(16, 42, 67, 0.05);
+		}
+
+		.cardtitle {
+			margin: 0 0 10px;
+			font-size: 0.95rem;
+			font-weight: 700;
+		}
+
+		.command-grid {
+			display: grid;
+			gap: 8px;
+		}
+
+		.command .label {
+			font-size: 0.8rem;
+			font-weight: 700;
+			color: var(--accent);
+		}
+
+		.stat .k {
+			font-family: "IBM Plex Mono", monospace;
+			font-size: 1.2rem;
+			font-weight: 600;
+		}
+
+		.panel {
+			background: var(--card);
+			border: 1px solid var(--line);
+			border-radius: 14px;
+			overflow: hidden;
+		}
+
+		.bar {
+			padding: 12px;
+			border-bottom: 1px solid var(--line);
+			display: flex;
+			gap: 10px;
+			flex-wrap: wrap;
+			align-items: center;
+			background: linear-gradient(180deg, #fff 0%, #fbf8f2 100%);
+		}
+
+		table {
+			width: 100%;
+			border-collapse: collapse;
+			font-size: 0.94rem;
+		}
+
+		th,
+		td {
+			border-bottom: 1px solid #efe8d9;
+			text-align: left;
+			padding: 9px 10px;
+			vertical-align: top;
+		}
+
+		th {
+			position: sticky;
+			top: 0;
+			z-index: 1;
+			background: #f6efe2;
+		}
+
+		.table-wrap {
+			max-height: 74vh;
+			overflow: auto;
+		}
+
+		@media (max-width: 1000px) {
+			.shell {
+				grid-template-columns: 1fr;
+			}
+
+			.sidebar {
+				position: static;
+			}
+
+			.footer {
+				grid-template-columns: 1fr;
+			}
+		}
+
+		.pill {
+			display: inline-block;
+			border-radius: 999px;
+			padding: 3px 9px;
+			font-size: 0.78rem;
+			border: 1px solid transparent;
+		}
+
+		.ok {
+			color: var(--ok);
+			background: #e9f8ef;
+			border-color: #b7ebcb;
+		}
+
+		.warn {
+			color: var(--warn);
+			background: #fff5e5;
+			border-color: #ffd6a3;
+		}
+
+		.error {
+			color: var(--error);
+			background: #fdecec;
+			border-color: #f3b7b7;
+		}
+
+		.mono {
+			font-family: "IBM Plex Mono", monospace;
+			font-size: 0.82rem;
+			color: var(--muted);
+			word-break: break-all;
+		}
+
+		@keyframes reveal {
+			to {
+				opacity: 1;
+				transform: translateY(0);
+			}
+		}
+	</style>
+</head>
+<body>
+	<main class="wrap">
+		<section class="hero">
+			<h1>VK Audio Dashboard</h1>
+			<p>Load a manifest, scan statuses, and play downloaded files directly from the local workspace.</p>
+			<div class="controls">
+				<button id="loadDefault">Load vk_audios_complete.json</button>
+				<label class="alt" style="display:inline-flex;align-items:center;gap:8px;padding:10px 12px;border-radius:10px;border:1px solid #134e4a;background:#0f766e;color:#ecfeff;cursor:pointer;">
+					Load custom JSON
+					<input id="filePicker" type="file" accept="application/json" style="display:none;" />
+				</label>
+			</div>
+		</section>
+
+		<div class="shell">
+			<aside class="sidebar">
+				<section class="player-dock">
+					<div class="meta">
+						<div>
+							<div class="title" id="nowPlaying">No file selected</div>
+							<div class="subtitle">Local playback only. Files are verified before they appear as playable.</div>
+						</div>
+						<div class="subtitle" id="pathInfo"></div>
+					</div>
+					<audio id="audio" controls preload="metadata"></audio>
+				</section>
+
+				<section class="panelcard">
+					<h2 class="cardtitle">Selection</h2>
+					<div class="controls" style="margin-top:0;">
+						<label style="display:flex;flex-direction:column;gap:6px;flex:1;">
+							Start index
+							<input id="startIndex" type="number" min="0" value="0" />
+						</label>
+						<label style="display:flex;flex-direction:column;gap:6px;flex:1;">
+							Count
+							<input id="rowCount" type="number" min="1" placeholder="auto" />
+						</label>
+					</div>
+					<div class="controls" style="margin-top:10px;">
+						<button id="useAllBtn" class="alt">Use all loaded</button>
+						<button id="scanBtn" class="alt">Scan local files</button>
+					</div>
+				</section>
+			</aside>
+
+			<section class="maincol">
+				<section class="panel">
+					<div class="bar" style="font-weight:700;color:var(--muted);">Playlist</div>
+					<div class="bar">
+						<input id="q" type="search" placeholder="Search page/title/artist..." style="min-width:260px;flex:1;" />
+						<select id="statusFilter">
+							<option value="all">All statuses</option>
+							<option value="downloaded">downloaded</option>
+							<option value="failed">failed</option>
+							<option value="not_attempted">not_attempted</option>
+						</select>
+						<select id="methodFilter">
+							<option value="all">All methods</option>
+							<option value="direct_hls">direct_hls</option>
+							<option value="direct_url">direct_url</option>
+							<option value="captured_segments">captured_segments</option>
+							<option value="record_fallback">record_fallback</option>
+						</select>
+					</div>
+
+					<div class="table-wrap">
+						<table>
+							<thead>
+								<tr>
+									<th>#</th>
+									<th>Page</th>
+									<th>Title</th>
+									<th>Artist</th>
+									<th>Status</th>
+									<th>Method</th>
+									<th>Local</th>
+									<th>Duration</th>
+									<th>Play</th>
+								</tr>
+							</thead>
+							<tbody id="rows"></tbody>
+						</table>
+					</div>
+				</section>
+			</section>
+		</div>
+
+		<footer class="footer">
+			<section class="footercard">
+				<h2 class="cardtitle">Stats</h2>
+				<section class="footergrid" id="stats"></section>
+			</section>
+
+			<section class="footercard">
+				<h2 class="cardtitle">Commands</h2>
+				<div class="footer-actions" id="commandGrid"></div>
+				<div id="launchStatus" class="mono" style="margin-top:10px;"></div>
+			</section>
+
+			<section class="footercard">
+				<h2 class="cardtitle">FFmpeg Setup & Convert</h2>
+				<div class="mono" id="ffmpegStatus">Checking ffmpeg...</div>
+				<div class="footer-actions" style="margin-top:10px;">
+					<div class="install-row">
+						<div class="label">winget</div>
+						<code id="cmdWinget">winget install --id Gyan.FFmpeg -e</code>
+						<button class="alt" data-copy-install="winget">Copy</button>
+					</div>
+					<div class="install-row">
+						<div class="label">choco</div>
+						<code id="cmdChoco">choco install ffmpeg -y</code>
+						<button class="alt" data-copy-install="choco">Copy</button>
+					</div>
+					<div class="install-row">
+						<div class="label">scoop</div>
+						<code id="cmdScoop">scoop install ffmpeg</code>
+						<button class="alt" data-copy-install="scoop">Copy</button>
+					</div>
+				</div>
+				<div class="controls" style="margin-top:10px;">
+					<button id="recheckFfmpeg" class="alt">Recheck ffmpeg</button>
+					<button id="runConvertNow" class="alt">Convert now</button>
+				</div>
+				<div id="ffmpegHint" class="mono" style="margin-top:8px;"></div>
+			</section>
+
+			<section class="footercard">
+				<h2 class="cardtitle">Job Monitor</h2>
+				<div class="footer-actions" id="jobList"></div>
+				<div id="jobDetails" class="mono" style="margin-top:8px;"></div>
+				<pre id="jobLog" class="log-box">No job selected.</pre>
+			</section>
+		</footer>
+	</main>
+
+	<script>
+		const rowsEl = document.getElementById("rows");
+		const statsEl = document.getElementById("stats");
+		const qEl = document.getElementById("q");
+		const statusEl = document.getElementById("statusFilter");
+		const methodEl = document.getElementById("methodFilter");
+		const startIndexEl = document.getElementById("startIndex");
+		const rowCountEl = document.getElementById("rowCount");
+		const nowPlayingEl = document.getElementById("nowPlaying");
+		const pathInfoEl = document.getElementById("pathInfo");
+		const audioEl = document.getElementById("audio");
+		const commandGrid = document.getElementById("commandGrid");
+		const launchStatusEl = document.getElementById("launchStatus");
+		const ffmpegStatusEl = document.getElementById("ffmpegStatus");
+		const ffmpegHintEl = document.getElementById("ffmpegHint");
+		const recheckFfmpegBtn = document.getElementById("recheckFfmpeg");
+		const runConvertNowBtn = document.getElementById("runConvertNow");
+		const cmdWingetEl = document.getElementById("cmdWinget");
+		const cmdChocoEl = document.getElementById("cmdChoco");
+		const cmdScoopEl = document.getElementById("cmdScoop");
+		const jobListEl = document.getElementById("jobList");
+		const jobDetailsEl = document.getElementById("jobDetails");
+		const jobLogEl = document.getElementById("jobLog");
+
+		let data = [];
+		let scanToken = 0;
+		let selectedJobId = null;
+		let jobsPollingId = null;
+		let lastConvertSuccessJobId = null;
+
+		function fileBaseName(p) {
+			return String(p || "").split(/[/\\]/).pop() || "";
+		}
+
+		function fileStem(fileName) {
+			const base = fileBaseName(fileName);
+			return base.replace(/\.[^.]+$/, "");
+		}
+
+		function encodeLocalPath(parts) {
+			return parts.filter(Boolean).map((part) => encodeURIComponent(part)).join("/");
+		}
+
+		function selectionBounds() {
+			const start = Math.max(0, Number(startIndexEl.value) || 0);
+			const rawCount = Number(rowCountEl.value);
+			const count = Number.isFinite(rawCount) && rawCount > 0 ? Math.floor(rawCount) : data.length - start;
+			const end = Math.min(data.length, start + count);
+			return { start, end, count: Math.max(0, end - start) };
+		}
+
+		function selectedRows() {
+			const { start, end } = selectionBounds();
+			return data.slice(start, end);
+		}
+
+		function visibleRows() {
+			const q = qEl.value.trim().toLowerCase();
+			const sf = statusEl.value;
+			const mf = methodEl.value;
+
+			return selectedRows().filter((t) => {
+				const hay = `${t.title || ""} ${t.artist || ""} ${t.content_id || ""}`.toLowerCase();
+				if (q && !hay.includes(q)) return false;
+				if (sf !== "all" && (t.download_status || "") !== sf) return false;
+				if (mf !== "all" && (t.download_method || "") !== mf) return false;
+				return true;
+			});
+		}
+
+		function defaultLocalSource(track) {
+			if (!track || track.download_status !== "downloaded") return null;
+
+			const base = fileBaseName(track.downloaded_file);
+			const stem = fileStem(track.downloaded_file);
+			const dot = base.lastIndexOf(".");
+			const ext = dot >= 0 ? base.toLowerCase().slice(dot) : "";
+
+			if (!base) return null;
+
+			if (ext === ".ts") {
+				return {
+					status: "needs_conversion",
+					playUrl: `downloads_mp3/${encodeURIComponent(stem)}.mp3`,
+					fallbackUrl: `downloads/${encodeLocalPath([base])}`,
+					label: "TS source requires conversion",
+				};
+			}
+
+			return {
+				status: "playable",
+				playUrl: `downloads/${encodeLocalPath([base])}`,
+				fallbackUrl: `downloads/${encodeLocalPath([base])}`,
+				label: `Local ${ext.replace(".", "").toUpperCase() || "audio"}`,
+			};
+		}
+
+		function renderCommands() {
+			const commands = [
+				["Scrape", "vk:full", "npm run vk:full"],
+				["Resume", "vk:resume", "npm run vk:resume"],
+				["Audit", "vk:assess", "npm run vk:assess"],
+				["Convert", "vk:convert-mp3", "npm run vk:convert-mp3"],
+				["Open", "dashboard", "Open dashboard"],
+			];
+
+			commandGrid.innerHTML = commands
+				.map(
+					([label, script, command]) => `
+						<div class="action-row">
+							<div class="label">${label}</div>
+							<code>${command}</code>
+							<button data-script="${encodeURIComponent(script)}" class="alt">Run</button>
+						</div>
+					`,
+				)
+				.join("");
+		}
+
+		async function fetchToolsStatus() {
+			const endpoints = Array.from(new Set([
+				`${window.location.origin}/api/tools`,
+				"http://localhost:8787/api/tools",
+			]));
+
+			let lastError = null;
+			for (const endpoint of endpoints) {
+				const response = await fetch(endpoint, { method: "GET" }).catch((error) => ({ ok: false, status: 0, _networkError: error }));
+				if (response.ok) return response.json();
+
+				const payload = await response.json?.().catch?.(() => ({})) || {};
+				lastError = payload.error || payload.details || response._networkError?.message || `HTTP ${response.status}`;
+			}
+
+			throw new Error(lastError || "tool_status_unavailable");
+		}
+
+		function setInstallCommands(install) {
+			if (!install) return;
+			cmdWingetEl.textContent = install.winget || cmdWingetEl.textContent;
+			cmdChocoEl.textContent = install.choco || cmdChocoEl.textContent;
+			cmdScoopEl.textContent = install.scoop || cmdScoopEl.textContent;
+		}
+
+		async function refreshFfmpegStatus() {
+			ffmpegStatusEl.textContent = "Checking ffmpeg...";
+			ffmpegHintEl.textContent = "";
+
+			try {
+				const payload = await fetchToolsStatus();
+				setInstallCommands(payload?.ffmpeg?.install);
+
+				if (payload?.ffmpeg?.available) {
+					ffmpegStatusEl.innerHTML = '<span class="pill ok">ffmpeg available</span>';
+					ffmpegHintEl.textContent = payload?.ffmpeg?.version || "Ready to convert.";
+					return;
+				}
+
+				ffmpegStatusEl.innerHTML = '<span class="pill warn">ffmpeg missing</span>';
+				ffmpegHintEl.textContent = "Install ffmpeg using one of the commands above, then click Recheck ffmpeg.";
+			} catch (error) {
+				ffmpegStatusEl.innerHTML = '<span class="pill error">status unavailable</span>';
+				ffmpegHintEl.textContent = `Could not query tools status: ${error.message || "unknown_error"}`;
+			}
+		}
+
+		async function launchScript(script) {
+			if (script === "dashboard") {
+				window.open("/scraper.html", "_blank", "noopener,noreferrer");
+				launchStatusEl.textContent = "Dashboard opened in a new tab.";
+				return;
+			}
+
+			launchStatusEl.textContent = `Launching ${script}...`;
+			const endpoints = Array.from(new Set([
+				`${window.location.origin}/api/run`,
+				"http://localhost:8787/api/run",
+			]));
+
+			let lastError = { code: null, details: null };
+			for (const endpoint of endpoints) {
+				const postResponse = await fetch(endpoint, {
+					method: "POST",
+					headers: { "Content-Type": "application/json" },
+					body: JSON.stringify({ script }),
+				}).catch((error) => ({ ok: false, status: 0, _networkError: error }));
+
+				if (postResponse.ok) {
+					const payload = await postResponse.json().catch(() => ({}));
+					const startedJobId = payload?.job?.id || null;
+					if (startedJobId) selectedJobId = startedJobId;
+					launchStatusEl.textContent = `Launched ${script}${startedJobId ? ` (job #${startedJobId})` : ""}.`;
+					await refreshJobs();
+					return;
+				}
+
+				if (postResponse.status === 405) {
+					const getResponse = await fetch(`${endpoint}?script=${encodeURIComponent(script)}`, {
+						method: "GET",
+					}).catch((error) => ({ ok: false, status: 0, _networkError: error }));
+
+					if (getResponse.ok) {
+						const payload = await getResponse.json().catch(() => ({}));
+						const startedJobId = payload?.job?.id || null;
+						if (startedJobId) selectedJobId = startedJobId;
+						launchStatusEl.textContent = `Launched ${script}${startedJobId ? ` (job #${startedJobId})` : ""}.`;
+						await refreshJobs();
+						return;
+					}
+
+					const getPayload = await getResponse.json?.().catch?.(() => ({})) || {};
+					lastError = {
+						code: getPayload.error || `HTTP ${getResponse.status}`,
+						details: getPayload.details || null,
+					};
+					continue;
+				}
+
+				const postPayload = await postResponse.json?.().catch?.(() => ({})) || {};
+				lastError = {
+					code:
+						postPayload.error ||
+						postResponse._networkError?.message ||
+						`HTTP ${postResponse.status}`,
+					details: postPayload.details || postPayload.error_description || null,
+				};
+			}
+
+			if (lastError.code === "ffmpeg_not_found_on_PATH") {
+				throw new Error(
+					`${lastError.code}: ${
+						lastError.details || "Install ffmpeg and ensure ffmpeg is available in PATH before running conversion."
+					}`,
+				);
+			}
+
+			throw new Error(
+				`${lastError.code || "unable_to_launch"}${
+					lastError.details ? `: ${lastError.details}` : ""
+				}. Ensure dashboard is opened via node tools/serve_dashboard.js on http://localhost:8787`,
+			);
+		}
+
+		function fmtJobStatus(status) {
+			if (status === "succeeded") return '<span class="pill ok">succeeded</span>';
+			if (status === "failed") return '<span class="pill error">failed</span>';
+			if (status === "running") return '<span class="pill warn">running</span>';
+			return `<span class="pill warn">${status || "unknown"}</span>`;
+		}
+
+		async function fetchJobs() {
+			const endpoints = Array.from(new Set([
+				`${window.location.origin}/api/jobs`,
+				"http://localhost:8787/api/jobs",
+			]));
+
+			let lastError = null;
+			for (const endpoint of endpoints) {
+				const response = await fetch(endpoint, { method: "GET", cache: "no-store" }).catch((error) => ({ ok: false, status: 0, _networkError: error }));
+				if (response.ok) return response.json();
+
+				const payload = await response.json?.().catch?.(() => ({})) || {};
+				lastError = payload.error || payload.details || response._networkError?.message || `HTTP ${response.status}`;
+			}
+
+			throw new Error(lastError || "jobs_unavailable");
+		}
+
+		async function fetchJobById(jobId) {
+			if (!jobId) return null;
+			const endpoints = Array.from(new Set([
+				`${window.location.origin}/api/jobs?id=${encodeURIComponent(jobId)}`,
+				`http://localhost:8787/api/jobs?id=${encodeURIComponent(jobId)}`,
+			]));
+
+			for (const endpoint of endpoints) {
+				const response = await fetch(endpoint, { method: "GET", cache: "no-store" }).catch(() => null);
+				if (response && response.ok) {
+					const payload = await response.json().catch(() => ({}));
+					return payload?.job || null;
+				}
+			}
+
+			return null;
+		}
+
+		async function refreshJobs() {
+			try {
+				const payload = await fetchJobs();
+				const jobs = Array.isArray(payload?.jobs) ? payload.jobs : [];
+
+				jobs.sort((a, b) => Number(b.id) - Number(a.id));
+				if (!selectedJobId && jobs.length > 0) selectedJobId = jobs[0].id;
+
+				jobListEl.innerHTML = jobs
+					.slice(0, 12)
+					.map(
+						(job) => `
+							<div class="job-row">
+								<div>#${job.id}</div>
+								<div>${job.script} ${fmtJobStatus(job.status)}</div>
+								<button class="alt" data-job-id="${job.id}">View</button>
+							</div>
+						`,
+					)
+					.join("") || '<div class="mono">No jobs yet.</div>';
+
+				for (const job of jobs) {
+					if (job.script === "vk:convert-mp3" && job.status === "succeeded" && job.id !== lastConvertSuccessJobId) {
+						lastConvertSuccessJobId = job.id;
+						await scanLocalAvailability(data);
+						renderStats(selectedRows());
+						renderRows();
+					}
+				}
+
+				const detail = await fetchJobById(selectedJobId);
+				if (detail) {
+					jobDetailsEl.textContent =
+						`job #${detail.id} | script=${detail.script} | status=${detail.status} | ` +
+						`exit=${detail.exitCode ?? "n/a"} | started=${detail.startedAt || "n/a"}`;
+					jobLogEl.textContent = (detail.logs || []).slice(-120).join("\n") || "No logs yet.";
+				} else {
+					jobDetailsEl.textContent = "No job selected.";
+					jobLogEl.textContent = "No job selected.";
+				}
+			} catch (error) {
+				jobDetailsEl.textContent = `Job monitor unavailable: ${error.message || "unknown_error"}`;
+				jobLogEl.textContent = "";
+			}
+		}
+
+		async function pathExists(url) {
+			try {
+				const res = await fetch(url, { method: "HEAD", cache: "no-store" });
+				return res.ok;
+			} catch (_error) {
+				return false;
+			}
+		}
+
+		async function scanLocalAvailability(rows) {
+			const token = ++scanToken;
+			for (const track of rows) {
+				const source = defaultLocalSource(track);
+				if (!source) {
+					track.local_status = track.download_status === "downloaded" ? "missing" : "not_downloaded";
+					track.play_url = "";
+					track.local_note = "No local file";
+					continue;
+				}
+
+				if (track.downloaded_file && String(track.downloaded_file).toLowerCase().endsWith(".ts")) {
+					const mp3Exists = await pathExists(source.playUrl);
+					if (token !== scanToken) return;
+					if (mp3Exists) {
+						track.local_status = "playable";
+						track.play_url = source.playUrl;
+						track.local_note = "Using converted MP3";
+					} else {
+						track.local_status = "needs_conversion";
+						track.play_url = "";
+						track.local_note = "TS found, MP3 conversion not present";
+					}
+					continue;
+				}
+
+				const exists = await pathExists(source.playUrl);
+				if (token !== scanToken) return;
+				if (exists) {
+					track.local_status = "playable";
+					track.play_url = source.playUrl;
+					track.local_note = source.label;
+				} else {
+					track.local_status = "missing";
+					track.play_url = "";
+					track.local_note = "Local file missing";
+				}
+			}
+		}
+
+		function pageNumber(title) {
+			const m = String(title || "").match(/PAGE\s*(\d+)/i);
+			return m ? Number(m[1]) : null;
+		}
+
+		function fmtStatus(status) {
+			if (status === "downloaded") return '<span class="pill ok">downloaded</span>';
+			if (status === "failed") return '<span class="pill error">failed</span>';
+			return `<span class="pill warn">${status || "unknown"}</span>`;
+		}
+
+		function fmtLocal(status, note) {
+			if (status === "playable") return `<span class="pill ok">playable</span>`;
+			if (status === "needs_conversion") return `<span class="pill warn">needs conversion</span>`;
+			if (status === "missing") return `<span class="pill error">missing</span>`;
+			return `<span class="pill warn">${note || status || "unknown"}</span>`;
+		}
+
+		function fmtDuration(sec) {
+			if (!Number.isFinite(sec)) return "-";
+			const m = Math.floor(sec / 60);
+			const s = sec % 60;
+			return `${m}:${String(s).padStart(2, "0")}`;
+		}
+
+		function computeStats(rows) {
+			const total = data.length;
+			const selected = rows.length;
+			const downloaded = rows.filter((t) => t.download_status === "downloaded").length;
+			const failed = rows.filter((t) => t.download_status === "failed").length;
+			const pending = rows.filter((t) => !t.download_status || t.download_status === "not_attempted").length;
+			const directHls = rows.filter((t) => t.download_method === "direct_hls").length;
+			const mp3 = rows.filter((t) => String(t.downloaded_file || "").toLowerCase().endsWith(".mp3")).length;
+			const localPlayable = rows.filter((t) => t.local_status === "playable").length;
+			const needsConversion = rows.filter((t) => t.local_status === "needs_conversion").length;
+
+			return { total, selected, downloaded, failed, pending, directHls, mp3, localPlayable, needsConversion };
+		}
+
+		function renderStats(rows) {
+			const s = computeStats(rows);
+			const cards = [
+				["Total", s.total],
+				["Selected", s.selected],
+				["Downloaded", s.downloaded],
+				["Failed", s.failed],
+				["Pending", s.pending],
+				["Direct HLS", s.directHls],
+				["Playable local", s.localPlayable],
+				["Needs conversion", s.needsConversion],
+				["MP3", s.mp3],
+			];
+
+			statsEl.innerHTML = cards
+				.map(([label, value], i) => `<article class="stat" style="animation-delay:${i * 45}ms"><div>${label}</div><div class="k">${value}</div></article>`)
+				.join("");
+		}
+
+		function renderRows() {
+			const rows = visibleRows().sort((a, b) => {
+				const pa = pageNumber(a.title);
+				const pb = pageNumber(b.title);
+				if (Number.isFinite(pa) && Number.isFinite(pb)) return pb - pa;
+				return String(a.title || "").localeCompare(String(b.title || ""));
+			});
+
+			rowsEl.innerHTML = rows
+				.map((t, idx) => {
+					const page = pageNumber(t.title);
+					const canPlay = t.local_status === "playable" && t.play_url;
+					return `
+						<tr>
+							<td>${idx + 1}</td>
+							<td>${Number.isFinite(page) ? page : "-"}</td>
+							<td>${t.title || "-"}</td>
+							<td>${t.artist || "-"}</td>
+							<td>${fmtStatus(t.download_status)}</td>
+							<td>${t.download_method || "-"}</td>
+							<td>${fmtLocal(t.local_status, t.local_note)}</td>
+							<td>${fmtDuration(t.duration_sec)}</td>
+							<td>
+								${canPlay ? `<button data-play="${encodeURIComponent(t.play_url)}" data-title="${encodeURIComponent(t.title || "Track")}" data-file="${encodeURIComponent(t.downloaded_file || "")}">Play local</button>` : "-"}
+							</td>
+						</tr>
+					`;
+				})
+				.join("");
+		}
+
+		async function applyManifest(rows) {
+			data = rows;
+			if (!rowCountEl.value) rowCountEl.value = String(data.length);
+			startIndexEl.value = String(Math.max(0, Number(startIndexEl.value) || 0));
+			await scanLocalAvailability(data);
+			renderStats(selectedRows());
+			renderRows();
+		}
+
+		async function loadDefaultManifest() {
+			const res = await fetch("vk_audios_complete.json", { cache: "no-store" });
+			if (!res.ok) throw new Error(`HTTP ${res.status}`);
+			await applyManifest(await res.json());
+		}
+
+		function loadFromFile(file) {
+			const reader = new FileReader();
+			reader.onload = () => {
+				try {
+					applyManifest(JSON.parse(String(reader.result || "[]")));
+				} catch (_error) {
+					alert("Invalid JSON file");
+				}
+			};
+			reader.readAsText(file);
+		}
+
+		document.getElementById("loadDefault").addEventListener("click", async () => {
+			try {
+				await loadDefaultManifest();
+			} catch (error) {
+				alert(`Failed to load vk_audios_complete.json: ${error.message}`);
+			}
+		});
+
+		document.getElementById("filePicker").addEventListener("change", (e) => {
+			const file = e.target.files?.[0];
+			if (file) loadFromFile(file);
+		});
+
+		document.getElementById("useAllBtn").addEventListener("click", async () => {
+			startIndexEl.value = "0";
+			rowCountEl.value = String(data.length || 0);
+			renderStats(selectedRows());
+			renderRows();
+		});
+
+		document.getElementById("scanBtn").addEventListener("click", async () => {
+			await scanLocalAvailability(selectedRows());
+			renderStats(selectedRows());
+			renderRows();
+		});
+
+		commandGrid.addEventListener("click", async (e) => {
+			const btn = e.target.closest("button[data-script]");
+			if (!btn) return;
+			const script = decodeURIComponent(btn.dataset.script || "");
+			try {
+				const original = btn.textContent;
+				btn.textContent = "Running...";
+				await launchScript(script);
+				btn.textContent = "Started";
+				setTimeout(() => (btn.textContent = original), 1200);
+			} catch (_error) {
+				btn.textContent = "Failed";
+				launchStatusEl.textContent = `Failed to launch ${script}: ${_error.message || "unknown_error"}`;
+				setTimeout(() => (btn.textContent = "Run"), 1200);
+			}
+		});
+
+		jobListEl.addEventListener("click", async (e) => {
+			const btn = e.target.closest("button[data-job-id]");
+			if (!btn) return;
+			selectedJobId = btn.getAttribute("data-job-id");
+			await refreshJobs();
+		});
+
+		document.querySelectorAll("button[data-copy-install]").forEach((btn) => {
+			btn.addEventListener("click", async () => {
+				const key = btn.getAttribute("data-copy-install");
+				const command =
+					key === "winget"
+						? cmdWingetEl.textContent
+						: key === "choco"
+							? cmdChocoEl.textContent
+							: cmdScoopEl.textContent;
+
+				try {
+					await navigator.clipboard.writeText(command || "");
+					const original = btn.textContent;
+					btn.textContent = "Copied";
+					setTimeout(() => (btn.textContent = original), 1000);
+				} catch (_error) {
+					ffmpegHintEl.textContent = "Clipboard copy failed. Copy command manually from the panel.";
+				}
+			});
+		});
+
+		recheckFfmpegBtn.addEventListener("click", async () => {
+			await refreshFfmpegStatus();
+		});
+
+		runConvertNowBtn.addEventListener("click", async () => {
+			try {
+				runConvertNowBtn.textContent = "Running...";
+				await launchScript("vk:convert-mp3");
+				await refreshFfmpegStatus();
+			} finally {
+				runConvertNowBtn.textContent = "Convert now";
+			}
+		});
+
+		qEl.addEventListener("input", renderRows);
+		statusEl.addEventListener("change", renderRows);
+		methodEl.addEventListener("change", renderRows);
+		startIndexEl.addEventListener("change", async () => {
+			if (!rowCountEl.value) rowCountEl.value = String(data.length || 0);
+			renderStats(selectedRows());
+			renderRows();
+		});
+		rowCountEl.addEventListener("change", async () => {
+			renderStats(selectedRows());
+			renderRows();
+		});
+
+		rowsEl.addEventListener("click", (e) => {
+			const btn = e.target.closest("button[data-play]");
+			if (!btn) return;
+
+			const src = decodeURIComponent(btn.dataset.play || "");
+			const title = decodeURIComponent(btn.dataset.title || "Track");
+			const rawFile = decodeURIComponent(btn.dataset.file || "");
+
+			nowPlayingEl.textContent = `Now playing: ${title}`;
+			pathInfoEl.textContent = `local_source: ${src} | manifest_file: ${rawFile}`;
+			audioEl.src = src;
+			audioEl.load();
+			audioEl.play().catch(() => {});
+		});
+
+		loadDefaultManifest().catch(() => {
+			statsEl.innerHTML = '<article class="stat"><div>Tip</div><div class="k">Load a JSON file to begin</div></article>';
+		});
+		renderCommands();
+		refreshFfmpegStatus();
+		refreshJobs();
+		jobsPollingId = setInterval(() => {
+			refreshJobs();
+		}, 2000);
+		window.addEventListener("beforeunload", () => {
+			if (jobsPollingId) clearInterval(jobsPollingId);
+		});
+	</script>
+</body>
+</html>

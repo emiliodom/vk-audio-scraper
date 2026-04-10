@@ -1,0 +1,553 @@
+{
+  "generated_at": "2026-04-10T19:18:42.282Z",
+  "manifest": "C:\\Users\\HP Pro Book\\Desktop\\vk\\vk_audios_complete.json",
+  "out_dir": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads_mp3",
+  "summary": {
+    "total_tracks": 77,
+    "candidate_tracks": 77,
+    "converted": 75,
+    "skipped_existing": 0,
+    "skipped_missing_input": 0,
+    "skipped_already_mp3": 2,
+    "failed": 0
+  },
+  "items": [
+    {
+      "content_id": "-43391401_167955053",
+      "title": "PAGE 82",
+      "status": "converted",
+      "input": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads\\0001_EXERCICES AUDIO DE GRAMMAIRE_PAGE 82.ts",
+      "output": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads_mp3\\0001_EXERCICES AUDIO DE GRAMMAIRE_PAGE 82.mp3"
+    },
+    {
+      "content_id": "-43391401_167954912",
+      "title": "PAGE 81",
+      "status": "converted",
+      "input": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads\\0002_EXERCICES AUDIO DE GRAMMAIRE_PAGE 81.ts",
+      "output": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads_mp3\\0002_EXERCICES AUDIO DE GRAMMAIRE_PAGE 81.mp3"
+    },
+    {
+      "content_id": "-43391401_167954781",
+      "title": "PAGE 80",
+      "status": "converted",
+      "input": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads\\0003_EXERCICES AUDIO DE GRAMMAIRE_PAGE 80.ts",
+      "output": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads_mp3\\0003_EXERCICES AUDIO DE GRAMMAIRE_PAGE 80.mp3"
+    },
+    {
+      "content_id": "-43391401_167954654",
+      "title": "PAGE 79",
+      "status": "converted",
+      "input": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads\\0004_EXERCICES AUDIO DE GRAMMAIRE_PAGE 79.ts",
+      "output": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads_mp3\\0004_EXERCICES AUDIO DE GRAMMAIRE_PAGE 79.mp3"
+    },
+    {
+      "content_id": "-43391401_167954549",
+      "title": "PAGE 78",
+      "status": "converted",
+      "input": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads\\0005_EXERCICES AUDIO DE GRAMMAIRE_PAGE 78.ts",
+      "output": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads_mp3\\0005_EXERCICES AUDIO DE GRAMMAIRE_PAGE 78.mp3"
+    },
+    {
+      "content_id": "-43391401_167954399",
+      "title": "PAGE 77",
+      "status": "converted",
+      "input": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads\\0006_EXERCICES AUDIO DE GRAMMAIRE_PAGE 77.ts",
+      "output": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads_mp3\\0006_EXERCICES AUDIO DE GRAMMAIRE_PAGE 77.mp3"
+    },
+    {
+      "content_id": "-43391401_167954274",
+      "title": "PAGE 76",
+      "status": "converted",
+      "input": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads\\0007_EXERCICES AUDIO DE GRAMMAIRE_PAGE 76.ts",
+      "output": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads_mp3\\0007_EXERCICES AUDIO DE GRAMMAIRE_PAGE 76.mp3"
+    },
+    {
+      "content_id": "-43391401_167933605",
+      "title": "PAGE 75",
+      "status": "converted",
+      "input": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads\\0008_EXERCICES AUDIO DE GRAMMAIRE_PAGE 75.ts",
+      "output": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads_mp3\\0008_EXERCICES AUDIO DE GRAMMAIRE_PAGE 75.mp3"
+    },
+    {
+      "content_id": "-43391401_167933434",
+      "title": "PAGE 74",
+      "status": "converted",
+      "input": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads\\0009_EXERCICES AUDIO DE GRAMMAIRE_PAGE 74.ts",
+      "output": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads_mp3\\0009_EXERCICES AUDIO DE GRAMMAIRE_PAGE 74.mp3"
+    },
+    {
+      "content_id": "-43391401_167933241",
+      "title": "PAGE 73",
+      "status": "converted",
+      "input": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads\\0010_EXERCICES AUDIO DE GRAMMAIRE_PAGE 73.ts",
+      "output": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads_mp3\\0010_EXERCICES AUDIO DE GRAMMAIRE_PAGE 73.mp3"
+    },
+    {
+      "content_id": "-43391401_167933090",
+      "title": "PAGE 72",
+      "status": "converted",
+      "input": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads\\0011_EXERCICES AUDIO DE GRAMMAIRE_PAGE 72.ts",
+      "output": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads_mp3\\0011_EXERCICES AUDIO DE GRAMMAIRE_PAGE 72.mp3"
+    },
+    {
+      "content_id": "-43391401_167932968",
+      "title": "PAGE 71",
+      "status": "converted",
+      "input": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads\\0012_EXERCICES AUDIO DE GRAMMAIRE_PAGE 71.ts",
+      "output": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads_mp3\\0012_EXERCICES AUDIO DE GRAMMAIRE_PAGE 71.mp3"
+    },
+    {
+      "content_id": "-43391401_167932795",
+      "title": "PAGE 70",
+      "status": "converted",
+      "input": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads\\0013_EXERCICES AUDIO DE GRAMMAIRE_PAGE 70.ts",
+      "output": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads_mp3\\0013_EXERCICES AUDIO DE GRAMMAIRE_PAGE 70.mp3"
+    },
+    {
+      "content_id": "-43391401_167932663",
+      "title": "PAGE 69",
+      "status": "converted",
+      "input": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads\\0014_EXERCICES AUDIO DE GRAMMAIRE_PAGE 69.ts",
+      "output": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads_mp3\\0014_EXERCICES AUDIO DE GRAMMAIRE_PAGE 69.mp3"
+    },
+    {
+      "content_id": "-43391401_167932531",
+      "title": "PAGE 68",
+      "status": "converted",
+      "input": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads\\0015_EXERCICES AUDIO DE GRAMMAIRE_PAGE 68.ts",
+      "output": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads_mp3\\0015_EXERCICES AUDIO DE GRAMMAIRE_PAGE 68.mp3"
+    },
+    {
+      "content_id": "-43391401_167932390",
+      "title": "PAGE 67",
+      "status": "converted",
+      "input": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads\\0016_EXERCICES AUDIO DE GRAMMAIRE_PAGE 67.ts",
+      "output": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads_mp3\\0016_EXERCICES AUDIO DE GRAMMAIRE_PAGE 67.mp3"
+    },
+    {
+      "content_id": "-43391401_167932215",
+      "title": "PAGE 66",
+      "status": "converted",
+      "input": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads\\0017_EXERCICES AUDIO DE GRAMMAIRE_PAGE 66.ts",
+      "output": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads_mp3\\0017_EXERCICES AUDIO DE GRAMMAIRE_PAGE 66.mp3"
+    },
+    {
+      "content_id": "-43391401_167932057",
+      "title": "PAGE 65",
+      "status": "converted",
+      "input": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads\\0018_EXERCICES AUDIO DE GRAMMAIRE_PAGE 65.ts",
+      "output": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads_mp3\\0018_EXERCICES AUDIO DE GRAMMAIRE_PAGE 65.mp3"
+    },
+    {
+      "content_id": "-43391401_167931916",
+      "title": "PAGE 64",
+      "status": "converted",
+      "input": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads\\0019_EXERCICES AUDIO DE GRAMMAIRE_PAGE 64.ts",
+      "output": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads_mp3\\0019_EXERCICES AUDIO DE GRAMMAIRE_PAGE 64.mp3"
+    },
+    {
+      "content_id": "-43391401_167931776",
+      "title": "PAGE 63",
+      "status": "converted",
+      "input": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads\\0020_EXERCICES AUDIO DE GRAMMAIRE_PAGE 63.ts",
+      "output": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads_mp3\\0020_EXERCICES AUDIO DE GRAMMAIRE_PAGE 63.mp3"
+    },
+    {
+      "content_id": "-43391401_167931636",
+      "title": "PAGE 62",
+      "status": "converted",
+      "input": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads\\0021_EXERCICES AUDIO DE GRAMMAIRE_PAGE 62.ts",
+      "output": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads_mp3\\0021_EXERCICES AUDIO DE GRAMMAIRE_PAGE 62.mp3"
+    },
+    {
+      "content_id": "-43391401_167931498",
+      "title": "PAGE 61",
+      "status": "converted",
+      "input": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads\\0022_EXERCICES AUDIO DE GRAMMAIRE_PAGE 61.ts",
+      "output": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads_mp3\\0022_EXERCICES AUDIO DE GRAMMAIRE_PAGE 61.mp3"
+    },
+    {
+      "content_id": "-43391401_167931355",
+      "title": "PAGE 60",
+      "status": "converted",
+      "input": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads\\0023_EXERCICES AUDIO DE GRAMMAIRE_PAGE 60.ts",
+      "output": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads_mp3\\0023_EXERCICES AUDIO DE GRAMMAIRE_PAGE 60.mp3"
+    },
+    {
+      "content_id": "-43391401_167931243",
+      "title": "PAGE 59",
+      "status": "converted",
+      "input": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads\\0024_EXERCICES AUDIO DE GRAMMAIRE_PAGE 59.ts",
+      "output": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads_mp3\\0024_EXERCICES AUDIO DE GRAMMAIRE_PAGE 59.mp3"
+    },
+    {
+      "content_id": "-43391401_167931131",
+      "title": "PAGE 58",
+      "status": "converted",
+      "input": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads\\0025_EXERCICES AUDIO DE GRAMMAIRE_PAGE 58.ts",
+      "output": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads_mp3\\0025_EXERCICES AUDIO DE GRAMMAIRE_PAGE 58.mp3"
+    },
+    {
+      "content_id": "-43391401_167930979",
+      "title": "PAGE 57",
+      "status": "converted",
+      "input": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads\\0026_EXERCICES AUDIO DE GRAMMAIRE_PAGE 57.ts",
+      "output": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads_mp3\\0026_EXERCICES AUDIO DE GRAMMAIRE_PAGE 57.mp3"
+    },
+    {
+      "content_id": "-43391401_167930857",
+      "title": "PAGE 56",
+      "status": "converted",
+      "input": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads\\0027_EXERCICES AUDIO DE GRAMMAIRE_PAGE 56.ts",
+      "output": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads_mp3\\0027_EXERCICES AUDIO DE GRAMMAIRE_PAGE 56.mp3"
+    },
+    {
+      "content_id": "-43391401_167930729",
+      "title": "PAGE 55",
+      "status": "converted",
+      "input": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads\\0028_EXERCICES AUDIO DE GRAMMAIRE_PAGE 55.ts",
+      "output": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads_mp3\\0028_EXERCICES AUDIO DE GRAMMAIRE_PAGE 55.mp3"
+    },
+    {
+      "content_id": "-43391401_167930614",
+      "title": "PAGE 54",
+      "status": "converted",
+      "input": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads\\0029_EXERCICES AUDIO DE GRAMMAIRE_PAGE 54.ts",
+      "output": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads_mp3\\0029_EXERCICES AUDIO DE GRAMMAIRE_PAGE 54.mp3"
+    },
+    {
+      "content_id": "-43391401_167930442",
+      "title": "PAGE 53",
+      "status": "converted",
+      "input": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads\\0030_EXERCICES AUDIO DE GRAMMAIRE_PAGE 53.ts",
+      "output": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads_mp3\\0030_EXERCICES AUDIO DE GRAMMAIRE_PAGE 53.mp3"
+    },
+    {
+      "content_id": "-43391401_167930305",
+      "title": "PAGE 52",
+      "status": "converted",
+      "input": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads\\0031_EXERCICES AUDIO DE GRAMMAIRE_PAGE 52.ts",
+      "output": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads_mp3\\0031_EXERCICES AUDIO DE GRAMMAIRE_PAGE 52.mp3"
+    },
+    {
+      "content_id": "-43391401_167930151",
+      "title": "PAGE 51",
+      "status": "converted",
+      "input": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads\\0032_EXERCICES AUDIO DE GRAMMAIRE_PAGE 51.ts",
+      "output": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads_mp3\\0032_EXERCICES AUDIO DE GRAMMAIRE_PAGE 51.mp3"
+    },
+    {
+      "content_id": "-43391401_167930036",
+      "title": "PAGE 50",
+      "status": "converted",
+      "input": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads\\0033_EXERCICES AUDIO DE GRAMMAIRE_PAGE 50.ts",
+      "output": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads_mp3\\0033_EXERCICES AUDIO DE GRAMMAIRE_PAGE 50.mp3"
+    },
+    {
+      "content_id": "-43391401_167929913",
+      "title": "PAGE 49",
+      "status": "converted",
+      "input": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads\\0034_EXERCICES AUDIO DE GRAMMAIRE_PAGE 49.ts",
+      "output": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads_mp3\\0034_EXERCICES AUDIO DE GRAMMAIRE_PAGE 49.mp3"
+    },
+    {
+      "content_id": "-43391401_167929740",
+      "title": "PAGE 48",
+      "status": "converted",
+      "input": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads\\0035_EXERCICES AUDIO DE GRAMMAIRE_PAGE 48.ts",
+      "output": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads_mp3\\0035_EXERCICES AUDIO DE GRAMMAIRE_PAGE 48.mp3"
+    },
+    {
+      "content_id": "-43391401_167929605",
+      "title": "PAGE 47",
+      "status": "converted",
+      "input": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads\\0036_EXERCICES AUDIO DE GRAMMAIRE_PAGE 47.ts",
+      "output": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads_mp3\\0036_EXERCICES AUDIO DE GRAMMAIRE_PAGE 47.mp3"
+    },
+    {
+      "content_id": "-43391401_167929496",
+      "title": "PAGE 46",
+      "status": "converted",
+      "input": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads\\0037_EXERCICES AUDIO DE GRAMMAIRE_PAGE 46.ts",
+      "output": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads_mp3\\0037_EXERCICES AUDIO DE GRAMMAIRE_PAGE 46.mp3"
+    },
+    {
+      "content_id": "-43391401_167900078",
+      "title": "PAGE 45",
+      "status": "converted",
+      "input": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads\\0038_EXERCICES AUDIO DE GRAMMAIRE_PAGE 45.ts",
+      "output": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads_mp3\\0038_EXERCICES AUDIO DE GRAMMAIRE_PAGE 45.mp3"
+    },
+    {
+      "content_id": "-43391401_167899962",
+      "title": "PAGE 44",
+      "status": "converted",
+      "input": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads\\0039_EXERCICES AUDIO DE GRAMMAIRE_PAGE 44.ts",
+      "output": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads_mp3\\0039_EXERCICES AUDIO DE GRAMMAIRE_PAGE 44.mp3"
+    },
+    {
+      "content_id": "-43391401_167899836",
+      "title": "PAGE 43",
+      "status": "converted",
+      "input": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads\\0040_EXERCICES AUDIO DE GRAMMAIRE_PAGE 43.ts",
+      "output": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads_mp3\\0040_EXERCICES AUDIO DE GRAMMAIRE_PAGE 43.mp3"
+    },
+    {
+      "content_id": "-43391401_167899725",
+      "title": "PAGE 42",
+      "status": "converted",
+      "input": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads\\0041_EXERCICES AUDIO DE GRAMMAIRE_PAGE 42.ts",
+      "output": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads_mp3\\0041_EXERCICES AUDIO DE GRAMMAIRE_PAGE 42.mp3"
+    },
+    {
+      "content_id": "-43391401_167899614",
+      "title": "PAGE 41",
+      "status": "converted",
+      "input": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads\\0042_EXERCICES AUDIO DE GRAMMAIRE_PAGE 41.ts",
+      "output": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads_mp3\\0042_EXERCICES AUDIO DE GRAMMAIRE_PAGE 41.mp3"
+    },
+    {
+      "content_id": "-43391401_167899517",
+      "title": "PAGE 40",
+      "status": "skipped_already_mp3",
+      "input": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads\\0043_EXERCICES AUDIO DE GRAMMAIRE_PAGE 40.mp3"
+    },
+    {
+      "content_id": "-43391401_167899406",
+      "title": "PAGE 39",
+      "status": "converted",
+      "input": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads\\0044_EXERCICES AUDIO DE GRAMMAIRE_PAGE 39.ts",
+      "output": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads_mp3\\0044_EXERCICES AUDIO DE GRAMMAIRE_PAGE 39.mp3"
+    },
+    {
+      "content_id": "-43391401_167899285",
+      "title": "PAGE 38",
+      "status": "converted",
+      "input": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads\\0045_EXERCICES AUDIO DE GRAMMAIRE_PAGE 38.ts",
+      "output": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads_mp3\\0045_EXERCICES AUDIO DE GRAMMAIRE_PAGE 38.mp3"
+    },
+    {
+      "content_id": "-43391401_167899149",
+      "title": "PAGE 37",
+      "status": "converted",
+      "input": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads\\0046_EXERCICES AUDIO DE GRAMMAIRE_PAGE 37.ts",
+      "output": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads_mp3\\0046_EXERCICES AUDIO DE GRAMMAIRE_PAGE 37.mp3"
+    },
+    {
+      "content_id": "-43391401_167899020",
+      "title": "PAGE 36",
+      "status": "converted",
+      "input": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads\\0047_EXERCICES AUDIO DE GRAMMAIRE_PAGE 36.ts",
+      "output": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads_mp3\\0047_EXERCICES AUDIO DE GRAMMAIRE_PAGE 36.mp3"
+    },
+    {
+      "content_id": "-43391401_167898851",
+      "title": "PAGE 35",
+      "status": "skipped_already_mp3",
+      "input": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads\\0048_EXERCICES AUDIO DE GRAMMAIRE_PAGE 35.mp3"
+    },
+    {
+      "content_id": "-43391401_167898720",
+      "title": "PAGE 34",
+      "status": "converted",
+      "input": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads\\0049_EXERCICES AUDIO DE GRAMMAIRE_PAGE 34.ts",
+      "output": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads_mp3\\0049_EXERCICES AUDIO DE GRAMMAIRE_PAGE 34.mp3"
+    },
+    {
+      "content_id": "-43391401_167898545",
+      "title": "PAGE 33",
+      "status": "converted",
+      "input": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads\\0050_EXERCICES AUDIO DE GRAMMAIRE_PAGE 33.ts",
+      "output": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads_mp3\\0050_EXERCICES AUDIO DE GRAMMAIRE_PAGE 33.mp3"
+    },
+    {
+      "content_id": "-43391401_167898451",
+      "title": "PAGE 32",
+      "status": "converted",
+      "input": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads\\0051_EXERCICES AUDIO DE GRAMMAIRE_PAGE 32.ts",
+      "output": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads_mp3\\0051_EXERCICES AUDIO DE GRAMMAIRE_PAGE 32.mp3"
+    },
+    {
+      "content_id": "-43391401_167898312",
+      "title": "PAGE 31",
+      "status": "converted",
+      "input": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads\\0052_EXERCICES AUDIO DE GRAMMAIRE_PAGE 31.ts",
+      "output": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads_mp3\\0052_EXERCICES AUDIO DE GRAMMAIRE_PAGE 31.mp3"
+    },
+    {
+      "content_id": "-43391401_167898172",
+      "title": "PAGE 30",
+      "status": "converted",
+      "input": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads\\0053_EXERCICES AUDIO DE GRAMMAIRE_PAGE 30.ts",
+      "output": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads_mp3\\0053_EXERCICES AUDIO DE GRAMMAIRE_PAGE 30.mp3"
+    },
+    {
+      "content_id": "-43391401_167898001",
+      "title": "PAGE 29",
+      "status": "converted",
+      "input": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads\\0054_EXERCICES AUDIO DE GRAMMAIRE_PAGE 29.ts",
+      "output": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads_mp3\\0054_EXERCICES AUDIO DE GRAMMAIRE_PAGE 29.mp3"
+    },
+    {
+      "content_id": "-43391401_167897861",
+      "title": "PAGE 28",
+      "status": "converted",
+      "input": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads\\0055_EXERCICES AUDIO DE GRAMMAIRE_PAGE 28.ts",
+      "output": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads_mp3\\0055_EXERCICES AUDIO DE GRAMMAIRE_PAGE 28.mp3"
+    },
+    {
+      "content_id": "-43391401_167897654",
+      "title": "PAGE 27",
+      "status": "converted",
+      "input": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads\\0056_EXERCICES AUDIO DE GRAMMAIRE_PAGE 27.ts",
+      "output": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads_mp3\\0056_EXERCICES AUDIO DE GRAMMAIRE_PAGE 27.mp3"
+    },
+    {
+      "content_id": "-43391401_167897510",
+      "title": "PAGE 26",
+      "status": "converted",
+      "input": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads\\0057_EXERCICES AUDIO DE GRAMMAIRE_PAGE 26.ts",
+      "output": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads_mp3\\0057_EXERCICES AUDIO DE GRAMMAIRE_PAGE 26.mp3"
+    },
+    {
+      "content_id": "-43391401_167897397",
+      "title": "PAGE 25",
+      "status": "converted",
+      "input": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads\\0058_EXERCICES AUDIO DE GRAMMAIRE_PAGE 25.ts",
+      "output": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads_mp3\\0058_EXERCICES AUDIO DE GRAMMAIRE_PAGE 25.mp3"
+    },
+    {
+      "content_id": "-43391401_167897226",
+      "title": "PAGE 24",
+      "status": "converted",
+      "input": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads\\0059_EXERCICES AUDIO DE GRAMMAIRE_PAGE 24.ts",
+      "output": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads_mp3\\0059_EXERCICES AUDIO DE GRAMMAIRE_PAGE 24.mp3"
+    },
+    {
+      "content_id": "-43391401_167897085",
+      "title": "PAGE 23",
+      "status": "converted",
+      "input": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads\\0060_EXERCICES AUDIO DE GRAMMAIRE_PAGE 23.ts",
+      "output": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads_mp3\\0060_EXERCICES AUDIO DE GRAMMAIRE_PAGE 23.mp3"
+    },
+    {
+      "content_id": "-43391401_167896974",
+      "title": "PAGE 22",
+      "status": "converted",
+      "input": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads\\0061_EXERCICES AUDIO DE GRAMMAIRE_PAGE 22.ts",
+      "output": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads_mp3\\0061_EXERCICES AUDIO DE GRAMMAIRE_PAGE 22.mp3"
+    },
+    {
+      "content_id": "-43391401_167896853",
+      "title": "PAGE 21",
+      "status": "converted",
+      "input": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads\\0062_EXERCICES AUDIO DE GRAMMAIRE_PAGE 21.ts",
+      "output": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads_mp3\\0062_EXERCICES AUDIO DE GRAMMAIRE_PAGE 21.mp3"
+    },
+    {
+      "content_id": "-43391401_167896743",
+      "title": "PAGE 20",
+      "status": "converted",
+      "input": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads\\0063_EXERCICES AUDIO DE GRAMMAIRE_PAGE 20.ts",
+      "output": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads_mp3\\0063_EXERCICES AUDIO DE GRAMMAIRE_PAGE 20.mp3"
+    },
+    {
+      "content_id": "-43391401_167896624",
+      "title": "PAGE 19",
+      "status": "converted",
+      "input": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads\\0064_EXERCICES AUDIO DE GRAMMAIRE_PAGE 19.ts",
+      "output": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads_mp3\\0064_EXERCICES AUDIO DE GRAMMAIRE_PAGE 19.mp3"
+    },
+    {
+      "content_id": "-43391401_167896484",
+      "title": "PAGE 18",
+      "status": "converted",
+      "input": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads\\0065_EXERCICES AUDIO DE GRAMMAIRE_PAGE 18.ts",
+      "output": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads_mp3\\0065_EXERCICES AUDIO DE GRAMMAIRE_PAGE 18.mp3"
+    },
+    {
+      "content_id": "-43391401_167896359",
+      "title": "PAGE 17",
+      "status": "converted",
+      "input": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads\\0066_EXERCICES AUDIO DE GRAMMAIRE_PAGE 17.ts",
+      "output": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads_mp3\\0066_EXERCICES AUDIO DE GRAMMAIRE_PAGE 17.mp3"
+    },
+    {
+      "content_id": "-43391401_167896266",
+      "title": "PAGE 16",
+      "status": "converted",
+      "input": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads\\0067_EXERCICES AUDIO DE GRAMMAIRE_PAGE 16.ts",
+      "output": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads_mp3\\0067_EXERCICES AUDIO DE GRAMMAIRE_PAGE 16.mp3"
+    },
+    {
+      "content_id": "-43391401_167896163",
+      "title": "PAGE 15",
+      "status": "converted",
+      "input": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads\\0068_EXERCICES AUDIO DE GRAMMAIRE_PAGE 15.ts",
+      "output": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads_mp3\\0068_EXERCICES AUDIO DE GRAMMAIRE_PAGE 15.mp3"
+    },
+    {
+      "content_id": "-43391401_167896047",
+      "title": "PAGE 14",
+      "status": "converted",
+      "input": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads\\0069_EXERCICES AUDIO DE GRAMMAIRE_PAGE 14.ts",
+      "output": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads_mp3\\0069_EXERCICES AUDIO DE GRAMMAIRE_PAGE 14.mp3"
+    },
+    {
+      "content_id": "-43391401_167895909",
+      "title": "PAGE 13",
+      "status": "converted",
+      "input": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads\\0070_EXERCICES AUDIO DE GRAMMAIRE_PAGE 13.ts",
+      "output": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads_mp3\\0070_EXERCICES AUDIO DE GRAMMAIRE_PAGE 13.mp3"
+    },
+    {
+      "content_id": "-43391401_167895803",
+      "title": "PAGE 12",
+      "status": "converted",
+      "input": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads\\0071_EXERCICES AUDIO DE GRAMMAIRE_PAGE 12.ts",
+      "output": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads_mp3\\0071_EXERCICES AUDIO DE GRAMMAIRE_PAGE 12.mp3"
+    },
+    {
+      "content_id": "-43391401_167895684",
+      "title": "PAGE 11",
+      "status": "converted",
+      "input": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads\\0072_EXERCICES AUDIO DE GRAMMAIRE_PAGE 11.ts",
+      "output": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads_mp3\\0072_EXERCICES AUDIO DE GRAMMAIRE_PAGE 11.mp3"
+    },
+    {
+      "content_id": "-43391401_167895559",
+      "title": "PAGE 10",
+      "status": "converted",
+      "input": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads\\0073_EXERCICES AUDIO DE GRAMMAIRE_PAGE 10.ts",
+      "output": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads_mp3\\0073_EXERCICES AUDIO DE GRAMMAIRE_PAGE 10.mp3"
+    },
+    {
+      "content_id": "-43391401_167895421",
+      "title": "PAGE 09",
+      "status": "converted",
+      "input": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads\\0074_EXERCICES AUDIO DE GRAMMAIRE_PAGE 09.ts",
+      "output": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads_mp3\\0074_EXERCICES AUDIO DE GRAMMAIRE_PAGE 09.mp3"
+    },
+    {
+      "content_id": "-43391401_167895304",
+      "title": "PAGE 08",
+      "status": "converted",
+      "input": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads\\0075_EXERCICES AUDIO DE GRAMMAIRE_PAGE 08.ts",
+      "output": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads_mp3\\0075_EXERCICES AUDIO DE GRAMMAIRE_PAGE 08.mp3"
+    },
+    {
+      "content_id": "-43391401_167894638",
+      "title": "PAGE 07",
+      "status": "converted",
+      "input": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads\\0076_EXERCICES AUDIO DE GRAMMAIRE_PAGE 07.ts",
+      "output": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads_mp3\\0076_EXERCICES AUDIO DE GRAMMAIRE_PAGE 07.mp3"
+    },
+    {
+      "content_id": "-43391401_167894511",
+      "title": "PAGE 06",
+      "status": "converted",
+      "input": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads\\0077_EXERCICES AUDIO DE GRAMMAIRE_PAGE 06.ts",
+      "output": "C:\\Users\\HP Pro Book\\Desktop\\vk\\downloads_mp3\\0077_EXERCICES AUDIO DE GRAMMAIRE_PAGE 06.mp3"
+    }
+  ]
+}

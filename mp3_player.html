@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MP3 Player</title>
+  <style>
+    :root {
+      --bg: #f5f1e8;
+      --panel: #fffdf8;
+      --ink: #1c1a17;
+      --muted: #6f675a;
+      --line: #d8cdb8;
+      --accent: #0f766e;
+      --accent-ink: #ffffff;
+      --active: #e7f8f5;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: "Trebuchet MS", "Segoe UI", sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 8% 12%, #fbe9c7 0%, rgba(251, 233, 199, 0) 45%),
+        radial-gradient(circle at 92% 18%, #d6efe8 0%, rgba(214, 239, 232, 0) 40%),
+        var(--bg);
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .wrap {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: minmax(280px, 1fr) minmax(320px, 1.5fr);
+      gap: 16px;
+    }
+
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      box-shadow: 0 8px 20px rgba(34, 30, 24, 0.08);
+      overflow: hidden;
+    }
+
+    .player {
+      padding: 16px;
+      display: grid;
+      gap: 12px;
+      align-content: start;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 1.35rem;
+      letter-spacing: 0.02em;
+    }
+
+    .meta {
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    audio {
+      width: 100%;
+    }
+
+    .controls {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    button {
+      border: 1px solid var(--line);
+      background: #fff;
+      color: var(--ink);
+      border-radius: 10px;
+      padding: 8px 12px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    button.primary {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: var(--accent-ink);
+    }
+
+    .playlistHead {
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      align-items: center;
+      font-size: 0.95rem;
+    }
+
+    .playlist {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      max-height: 70vh;
+      overflow: auto;
+    }
+
+    .playlist li {
+      border-bottom: 1px solid #efe6d5;
+    }
+
+    .playlist button {
+      width: 100%;
+      text-align: left;
+      border: 0;
+      border-radius: 0;
+      background: transparent;
+      padding: 10px 14px;
+      font-weight: 500;
+    }
+
+    .playlist button:hover {
+      background: #faf3e7;
+    }
+
+    .playlist button.active {
+      background: var(--active);
+      color: #0f4b46;
+      font-weight: 700;
+    }
+
+    @media (max-width: 860px) {
+      .wrap {
+        grid-template-columns: 1fr;
+      }
+
+      .playlist {
+        max-height: 52vh;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <section class="card player">
+      <h1>Local MP3 Player</h1>
+      <div id="nowPlaying" class="meta">Nothing selected</div>
+      <audio id="audio" controls preload="metadata"></audio>
+      <div class="controls">
+        <button id="prevBtn">Prev</button>
+        <button id="playBtn" class="primary">Play/Pause</button>
+        <button id="nextBtn">Next</button>
+        <button id="reloadBtn">Reload Playlist</button>
+      </div>
+      <div id="status" class="meta">Loading playlist...</div>
+    </section>
+
+    <section class="card">
+      <div class="playlistHead">
+        <strong>Playlist</strong>
+        <span id="count" class="meta">0 files</span>
+      </div>
+      <ul id="playlist" class="playlist"></ul>
+    </section>
+  </main>
+
+  <script>
+    const audioEl = document.getElementById("audio");
+    const playlistEl = document.getElementById("playlist");
+    const countEl = document.getElementById("count");
+    const nowPlayingEl = document.getElementById("nowPlaying");
+    const statusEl = document.getElementById("status");
+    const prevBtn = document.getElementById("prevBtn");
+    const playBtn = document.getElementById("playBtn");
+    const nextBtn = document.getElementById("nextBtn");
+    const reloadBtn = document.getElementById("reloadBtn");
+
+    let files = [];
+    let currentIndex = -1;
+
+    function updateStatus(text) {
+      statusEl.textContent = text;
+    }
+
+    function renderPlaylist() {
+      playlistEl.innerHTML = "";
+      countEl.textContent = `${files.length} file${files.length === 1 ? "" : "s"}`;
+
+      files.forEach((file, index) => {
+        const li = document.createElement("li");
+        const btn = document.createElement("button");
+        btn.textContent = file.name;
+        btn.className = index === currentIndex ? "active" : "";
+        btn.addEventListener("click", () => loadTrack(index, true));
+        li.appendChild(btn);
+        playlistEl.appendChild(li);
+      });
+    }
+
+    function loadTrack(index, autoplay) {
+      if (index < 0 || index >= files.length) return;
+      currentIndex = index;
+      const track = files[index];
+      audioEl.src = track.url;
+      nowPlayingEl.textContent = `${index + 1}. ${track.name}`;
+      renderPlaylist();
+      if (autoplay) {
+        audioEl.play().catch(() => {
+          updateStatus("Track selected. Press Play to start.");
+        });
+      }
+    }
+
+    function nextTrack(autoplay = true) {
+      if (!files.length) return;
+      const next = currentIndex + 1 < files.length ? currentIndex + 1 : 0;
+      loadTrack(next, autoplay);
+    }
+
+    function prevTrack() {
+      if (!files.length) return;
+      const prev = currentIndex - 1 >= 0 ? currentIndex - 1 : files.length - 1;
+      loadTrack(prev, true);
+    }
+
+    async function loadPlaylist() {
+      updateStatus("Loading playlist...");
+      try {
+        const response = await fetch("/api/mp3-list", { cache: "no-store" });
+        const data = await response.json();
+        if (!response.ok || !data.ok) {
+          throw new Error(data.error || "failed_to_load_playlist");
+        }
+
+        files = Array.isArray(data.files) ? data.files : [];
+        if (!files.length) {
+          currentIndex = -1;
+          nowPlayingEl.textContent = "Nothing selected";
+          audioEl.removeAttribute("src");
+          renderPlaylist();
+          updateStatus("No MP3 files found in downloads_mp3.");
+          return;
+        }
+
+        if (currentIndex < 0 || currentIndex >= files.length) {
+          currentIndex = 0;
+        }
+
+        renderPlaylist();
+        loadTrack(currentIndex, false);
+        updateStatus("Playlist ready.");
+      } catch (error) {
+        updateStatus(`Error: ${error.message}`);
+      }
+    }
+
+    prevBtn.addEventListener("click", prevTrack);
+    nextBtn.addEventListener("click", () => nextTrack(true));
+    playBtn.addEventListener("click", () => {
+      if (!audioEl.src && files.length) {
+        loadTrack(currentIndex >= 0 ? currentIndex : 0, true);
+        return;
+      }
+      if (audioEl.paused) {
+        audioEl.play().catch(() => updateStatus("Unable to start playback."));
+      } else {
+        audioEl.pause();
+      }
+    });
+    reloadBtn.addEventListener("click", loadPlaylist);
+
+    audioEl.addEventListener("ended", () => nextTrack(true));
+
+    loadPlaylist();
+  </script>
+</body>
+</html>
