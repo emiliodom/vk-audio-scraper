@@ -7,6 +7,7 @@
     "vk:resume": "node vk_audio_scraper.js --capture-urls --download --record-fallback --start-page 32 --play-wait-ms 5000 --capture-timeout-ms 15000 --record-max-ms 180000 --profile-dir vk_profile --out vk_audios_resume_32_06.json",
     "vk:assess": "node tools/checksum_assessment.js --manifest vk_audios_complete.json",
     "vk:convert-mp3": "node tools/convert_to_mp3.js --manifest vk_audios_complete.json --out-dir downloads_mp3",
+    "pdf:manifest": "node tools/generate_pdf_manifest.js",
     "dashboard": "node tools/serve_dashboard.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

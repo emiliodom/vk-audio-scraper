@@ -1,0 +1,600 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PDF Flip Viewer</title>
+  <style>
+    :root {
+      --bg: #f1efe8;
+      --panel: #fffdf8;
+      --ink: #1c1b17;
+      --muted: #6f6a5d;
+      --line: #ddd3bf;
+      --accent: #0d6d64;
+      --accent-ink: #ffffff;
+      --active: #e4f6f3;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Trebuchet MS", "Segoe UI", sans-serif;
+      color: var(--ink);
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at 10% 10%, #f8dfb3 0, rgba(248, 223, 179, 0) 45%),
+        radial-gradient(circle at 85% 20%, #d6ede8 0, rgba(214, 237, 232, 0) 40%),
+        var(--bg);
+      display: grid;
+      grid-template-columns: 320px 1fr;
+      gap: 14px;
+      padding: 14px;
+    }
+
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      box-shadow: 0 10px 22px rgba(44, 36, 24, 0.1);
+    }
+
+    .sidebar {
+      display: grid;
+      grid-template-rows: auto auto 1fr;
+      overflow: hidden;
+    }
+
+    .section {
+      padding: 12px;
+      border-bottom: 1px solid #eee3d0;
+    }
+
+    .section:last-child {
+      border-bottom: 0;
+    }
+
+    h1 {
+      margin: 0 0 6px;
+      font-size: 1.1rem;
+    }
+
+    .muted {
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    button,
+    input[type="color"],
+    input[type="range"] {
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 8px 10px;
+      background: #fff;
+      color: var(--ink);
+    }
+
+    button {
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    button.primary {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: var(--accent-ink);
+    }
+
+    .playlist {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      overflow: auto;
+      max-height: calc(100vh - 300px);
+    }
+
+    .playlist li {
+      border-bottom: 1px solid #f0e7d8;
+    }
+
+    .playlist button {
+      width: 100%;
+      border: 0;
+      border-radius: 0;
+      text-align: left;
+      background: transparent;
+      padding: 10px 12px;
+      font-weight: 500;
+    }
+
+    .playlist button:hover {
+      background: #f9f2e5;
+    }
+
+    .playlist button.active {
+      background: var(--active);
+      color: #0f4b46;
+      font-weight: 700;
+    }
+
+    .viewer {
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      overflow: hidden;
+    }
+
+    .viewerTop,
+    .viewerBottom {
+      padding: 10px 12px;
+      border-bottom: 1px solid #eee3d0;
+    }
+
+    .viewerBottom {
+      border-top: 1px solid #eee3d0;
+      border-bottom: 0;
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    #flipWrapper {
+      padding: 12px;
+      overflow: auto;
+      display: grid;
+      place-items: center;
+      min-height: 400px;
+    }
+
+    #flipbook {
+      width: min(90vw, 980px);
+      height: min(75vh, 760px);
+      background: #fefefe;
+      border-radius: 8px;
+      box-shadow: 0 8px 18px rgba(20, 16, 12, 0.2);
+    }
+
+    .page {
+      position: relative;
+      background: #fff;
+      overflow: hidden;
+    }
+
+    .pdfCanvas,
+    .drawCanvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .drawCanvas {
+      touch-action: none;
+      pointer-events: none;
+    }
+
+    @media (max-width: 1000px) {
+      body {
+        grid-template-columns: 1fr;
+      }
+
+      .playlist {
+        max-height: 260px;
+      }
+
+      #flipbook {
+        width: min(95vw, 980px);
+        height: min(65vh, 740px);
+      }
+    }
+  </style>
+</head>
+<body>
+  <aside class="panel sidebar">
+    <section class="section">
+      <h1>PDF Flip Viewer</h1>
+      <div class="muted">Static-host friendly. Put files in the pdfs folder.</div>
+      <div id="status" class="muted" style="margin-top: 8px;">Loading PDF list...</div>
+    </section>
+
+    <section class="section">
+      <div><strong>Annotations</strong></div>
+      <div class="controls">
+        <button id="drawToggle" class="primary">Draw: Off</button>
+        <label class="muted">Color <input id="colorPicker" type="color" value="#d12c2c" /></label>
+        <label class="muted">Size <input id="sizeRange" type="range" min="1" max="14" value="3" /></label>
+      </div>
+      <div class="controls">
+        <button id="saveBtn">Save Notes</button>
+        <button id="loadBtn">Load Notes</button>
+        <button id="clearPageBtn">Clear Page</button>
+      </div>
+      <div class="muted" style="margin-top: 8px;">Notes are stored in your browser localStorage.</div>
+    </section>
+
+    <section class="section">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;">
+        <strong>PDF List</strong>
+        <span id="count" class="muted">0 files</span>
+      </div>
+      <ul id="pdfList" class="playlist"></ul>
+    </section>
+  </aside>
+
+  <main class="panel viewer">
+    <section class="viewerTop">
+      <strong id="currentPdf">No PDF loaded</strong>
+      <span id="pageMeta" class="muted" style="margin-left:10px;">Page 0 / 0</span>
+    </section>
+
+    <section id="flipWrapper">
+      <div id="flipbook"></div>
+    </section>
+
+    <section class="viewerBottom">
+      <div class="controls">
+        <button id="prevPageBtn">Prev Page</button>
+        <button id="nextPageBtn">Next Page</button>
+      </div>
+      <div class="muted">Tip: if list is empty, run node tools/generate_pdf_manifest.js before upload.</div>
+    </section>
+  </main>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/page-flip@2.0.7/dist/js/page-flip.browser.min.js"></script>
+  <script>
+    pdfjsLib.GlobalWorkerOptions.workerSrc = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+
+    const statusEl = document.getElementById("status");
+    const countEl = document.getElementById("count");
+    const listEl = document.getElementById("pdfList");
+    const currentPdfEl = document.getElementById("currentPdf");
+    const pageMetaEl = document.getElementById("pageMeta");
+    const flipbookEl = document.getElementById("flipbook");
+
+    const drawToggleBtn = document.getElementById("drawToggle");
+    const colorPickerEl = document.getElementById("colorPicker");
+    const sizeRangeEl = document.getElementById("sizeRange");
+    const saveBtn = document.getElementById("saveBtn");
+    const loadBtn = document.getElementById("loadBtn");
+    const clearPageBtn = document.getElementById("clearPageBtn");
+    const prevPageBtn = document.getElementById("prevPageBtn");
+    const nextPageBtn = document.getElementById("nextPageBtn");
+
+    let pdfEntries = [];
+    let pageFlip = null;
+    let pageCanvases = [];
+    let currentPdfUrl = "";
+    let currentPdfName = "";
+    let drawEnabled = false;
+    let currentPageNumber = 1;
+
+    const annotationStore = {};
+
+    function setStatus(text) {
+      statusEl.textContent = text;
+    }
+
+    function annotationKey(pdfUrl) {
+      return `pdf_notes::${pdfUrl}`;
+    }
+
+    async function loadPdfList() {
+      setStatus("Loading PDF list...");
+
+      try {
+        const response = await fetch("./pdfs/manifest.json", { cache: "no-store" });
+        if (response.ok) {
+          const data = await response.json();
+          const files = Array.isArray(data.files) ? data.files : [];
+          pdfEntries = files
+            .filter((x) => x && typeof x.name === "string" && typeof x.url === "string")
+            .sort((a, b) => a.name.localeCompare(b.name, undefined, { numeric: true, sensitivity: "base" }));
+        }
+      } catch (err) {
+      }
+
+      if (!pdfEntries.length) {
+        try {
+          const response = await fetch("./pdfs/", { cache: "no-store" });
+          if (response.ok) {
+            const html = await response.text();
+            const doc = new DOMParser().parseFromString(html, "text/html");
+            const links = Array.from(doc.querySelectorAll("a[href]"));
+            pdfEntries = links
+              .map((a) => a.getAttribute("href") || "")
+              .filter((href) => /\.pdf$/i.test(href))
+              .map((href) => {
+                const url = new URL(href, "./pdfs/").pathname;
+                const name = decodeURIComponent(url.split("/").pop() || "");
+                return { name, url };
+              })
+              .sort((a, b) => a.name.localeCompare(b.name, undefined, { numeric: true, sensitivity: "base" }));
+          }
+        } catch (err) {
+        }
+      }
+
+      countEl.textContent = `${pdfEntries.length} file${pdfEntries.length === 1 ? "" : "s"}`;
+      renderPdfList();
+
+      if (!pdfEntries.length) {
+        setStatus("No PDFs found. Add files to pdfs and update pdfs/manifest.json.");
+        return;
+      }
+
+      setStatus("PDF list ready.");
+      await openPdf(0);
+    }
+
+    function renderPdfList() {
+      listEl.innerHTML = "";
+      for (let i = 0; i < pdfEntries.length; i += 1) {
+        const item = pdfEntries[i];
+        const li = document.createElement("li");
+        const btn = document.createElement("button");
+        btn.textContent = item.name;
+        if (item.url === currentPdfUrl) {
+          btn.classList.add("active");
+        }
+        btn.addEventListener("click", () => openPdf(i));
+        li.appendChild(btn);
+        listEl.appendChild(li);
+      }
+    }
+
+    function updatePageMeta() {
+      if (!pageFlip) {
+        pageMetaEl.textContent = "Page 0 / 0";
+        return;
+      }
+      const total = pageFlip.getPageCount();
+      const current = pageFlip.getCurrentPageIndex() + 1;
+      currentPageNumber = current;
+      pageMetaEl.textContent = `Page ${current} / ${total}`;
+    }
+
+    function attachDrawing(drawCanvas, pageNum) {
+      const ctx = drawCanvas.getContext("2d");
+      let drawing = false;
+      let stroke = null;
+
+      const getPoint = (event) => {
+        const rect = drawCanvas.getBoundingClientRect();
+        return {
+          x: event.clientX - rect.left,
+          y: event.clientY - rect.top,
+        };
+      };
+
+      drawCanvas.addEventListener("pointerdown", (event) => {
+        if (!drawEnabled) return;
+        drawing = true;
+        const pt = getPoint(event);
+        stroke = {
+          color: colorPickerEl.value,
+          width: Number(sizeRangeEl.value),
+          points: [pt],
+        };
+        ctx.strokeStyle = stroke.color;
+        ctx.lineWidth = stroke.width;
+        ctx.lineCap = "round";
+        ctx.beginPath();
+        ctx.moveTo(pt.x, pt.y);
+      });
+
+      drawCanvas.addEventListener("pointermove", (event) => {
+        if (!drawEnabled || !drawing || !stroke) return;
+        const pt = getPoint(event);
+        stroke.points.push(pt);
+        ctx.lineTo(pt.x, pt.y);
+        ctx.stroke();
+      });
+
+      const finishStroke = () => {
+        if (!drawing || !stroke) return;
+        drawing = false;
+        const key = annotationKey(currentPdfUrl);
+        if (!annotationStore[key]) annotationStore[key] = {};
+        if (!annotationStore[key][pageNum]) annotationStore[key][pageNum] = [];
+        annotationStore[key][pageNum].push(stroke);
+        stroke = null;
+      };
+
+      drawCanvas.addEventListener("pointerup", finishStroke);
+      drawCanvas.addEventListener("pointercancel", finishStroke);
+      drawCanvas.addEventListener("pointerleave", finishStroke);
+    }
+
+    function redrawAnnotations() {
+      const key = annotationKey(currentPdfUrl);
+      const byPage = annotationStore[key] || {};
+
+      for (const item of pageCanvases) {
+        const ctx = item.drawCanvas.getContext("2d");
+        ctx.clearRect(0, 0, item.drawCanvas.width, item.drawCanvas.height);
+
+        const strokes = byPage[item.pageNumber] || [];
+        for (const stroke of strokes) {
+          if (!stroke.points || !stroke.points.length) continue;
+          ctx.strokeStyle = stroke.color || "#d12c2c";
+          ctx.lineWidth = Number(stroke.width || 3);
+          ctx.lineCap = "round";
+          ctx.beginPath();
+          ctx.moveTo(stroke.points[0].x, stroke.points[0].y);
+          for (let i = 1; i < stroke.points.length; i += 1) {
+            ctx.lineTo(stroke.points[i].x, stroke.points[i].y);
+          }
+          ctx.stroke();
+        }
+      }
+    }
+
+    function setDrawMode(enabled) {
+      drawEnabled = !!enabled;
+      drawToggleBtn.textContent = `Draw: ${drawEnabled ? "On" : "Off"}`;
+      drawToggleBtn.classList.toggle("primary", drawEnabled);
+      for (const item of pageCanvases) {
+        item.drawCanvas.style.pointerEvents = drawEnabled ? "auto" : "none";
+      }
+    }
+
+    async function openPdf(index) {
+      if (index < 0 || index >= pdfEntries.length) return;
+
+      const item = pdfEntries[index];
+      currentPdfUrl = item.url;
+      currentPdfName = item.name;
+      currentPdfEl.textContent = item.name;
+      renderPdfList();
+      setStatus("Rendering PDF...");
+
+      try {
+        const loadingTask = pdfjsLib.getDocument(item.url);
+        const pdf = await loadingTask.promise;
+
+        if (pageFlip) {
+          pageFlip.destroy();
+          pageFlip = null;
+        }
+        flipbookEl.innerHTML = "";
+        pageCanvases = [];
+
+        const pages = [];
+        let pageWidth = 700;
+        let pageHeight = 900;
+
+        for (let pageNum = 1; pageNum <= pdf.numPages; pageNum += 1) {
+          const page = await pdf.getPage(pageNum);
+          const viewport = page.getViewport({ scale: 1.5 });
+
+          if (pageNum === 1) {
+            pageWidth = Math.round(viewport.width);
+            pageHeight = Math.round(viewport.height);
+          }
+
+          const pageEl = document.createElement("div");
+          pageEl.className = "page";
+          pageEl.style.width = `${pageWidth}px`;
+          pageEl.style.height = `${pageHeight}px`;
+
+          const pdfCanvas = document.createElement("canvas");
+          pdfCanvas.className = "pdfCanvas";
+          pdfCanvas.width = pageWidth;
+          pdfCanvas.height = pageHeight;
+
+          const drawCanvas = document.createElement("canvas");
+          drawCanvas.className = "drawCanvas";
+          drawCanvas.width = pageWidth;
+          drawCanvas.height = pageHeight;
+
+          pageEl.appendChild(pdfCanvas);
+          pageEl.appendChild(drawCanvas);
+          pages.push(pageEl);
+
+          const renderCtx = {
+            canvasContext: pdfCanvas.getContext("2d"),
+            viewport: page.getViewport({ scale: pageWidth / viewport.width * 1.5 / 1.5 }),
+          };
+          await page.render(renderCtx).promise;
+
+          attachDrawing(drawCanvas, pageNum);
+          pageCanvases.push({ pageNumber: pageNum, drawCanvas });
+        }
+
+        for (const p of pages) {
+          flipbookEl.appendChild(p);
+        }
+
+        pageFlip = new St.PageFlip(flipbookEl, {
+          width: pageWidth,
+          height: pageHeight,
+          minWidth: 280,
+          minHeight: 360,
+          maxShadowOpacity: 0.4,
+          mobileScrollSupport: false,
+          showCover: true,
+          usePortrait: true,
+        });
+
+        pageFlip.loadFromHTML(document.querySelectorAll("#flipbook .page"));
+        pageFlip.on("flip", updatePageMeta);
+        updatePageMeta();
+        loadNotes();
+        setDrawMode(false);
+        setStatus(`Loaded ${pdf.numPages} pages.`);
+      } catch (error) {
+        setStatus(`Failed to load PDF: ${error.message || error}`);
+      }
+    }
+
+    function saveNotes() {
+      if (!currentPdfUrl) return;
+      const key = annotationKey(currentPdfUrl);
+      const payload = annotationStore[key] || {};
+      localStorage.setItem(key, JSON.stringify(payload));
+      setStatus(`Saved notes for ${currentPdfName}.`);
+    }
+
+    function loadNotes() {
+      if (!currentPdfUrl) return;
+      const key = annotationKey(currentPdfUrl);
+      const raw = localStorage.getItem(key);
+      if (!raw) {
+        annotationStore[key] = {};
+        redrawAnnotations();
+        return;
+      }
+
+      try {
+        annotationStore[key] = JSON.parse(raw) || {};
+        redrawAnnotations();
+        setStatus(`Loaded saved notes for ${currentPdfName}.`);
+      } catch (error) {
+        annotationStore[key] = {};
+        redrawAnnotations();
+      }
+    }
+
+    function clearCurrentPageNotes() {
+      if (!currentPdfUrl || !pageFlip) return;
+      const key = annotationKey(currentPdfUrl);
+      const pageNum = pageFlip.getCurrentPageIndex() + 1;
+      if (!annotationStore[key]) annotationStore[key] = {};
+      annotationStore[key][pageNum] = [];
+      redrawAnnotations();
+      setStatus(`Cleared notes for page ${pageNum}.`);
+    }
+
+    drawToggleBtn.addEventListener("click", () => setDrawMode(!drawEnabled));
+    saveBtn.addEventListener("click", saveNotes);
+    loadBtn.addEventListener("click", loadNotes);
+    clearPageBtn.addEventListener("click", clearCurrentPageNotes);
+
+    prevPageBtn.addEventListener("click", () => {
+      if (!pageFlip) return;
+      pageFlip.flipPrev();
+      updatePageMeta();
+    });
+
+    nextPageBtn.addEventListener("click", () => {
+      if (!pageFlip) return;
+      pageFlip.flipNext();
+      updatePageMeta();
+    });
+
+    loadPdfList();
+  </script>
+</body>
+</html>

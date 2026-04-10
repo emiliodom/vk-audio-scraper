@@ -153,9 +153,12 @@
         <button id="prevBtn">Prev</button>
         <button id="playBtn" class="primary">Play/Pause</button>
         <button id="nextBtn">Next</button>
-        <button id="reloadBtn">Reload Playlist</button>
+        <button id="loadFolderBtn">Load Folder</button>
+        <button id="loadFilesBtn">Load Files</button>
       </div>
-      <div id="status" class="meta">Loading playlist...</div>
+      <div id="status" class="meta">Choose Load Folder or Load Files to build the playlist.</div>
+      <input id="folderInput" type="file" accept="audio/mpeg,.mp3" webkitdirectory directory multiple hidden />
+      <input id="filesInput" type="file" accept="audio/mpeg,.mp3" multiple hidden />
     </section>
 
     <section class="card">
@@ -167,6 +170,7 @@
     </section>
   </main>
 
+  <script src="./downloads_mp3/playlist.js"></script>
   <script>
     const audioEl = document.getElementById("audio");
     const playlistEl = document.getElementById("playlist");
@@ -176,7 +180,10 @@
     const prevBtn = document.getElementById("prevBtn");
     const playBtn = document.getElementById("playBtn");
     const nextBtn = document.getElementById("nextBtn");
-    const reloadBtn = document.getElementById("reloadBtn");
+    const loadFolderBtn = document.getElementById("loadFolderBtn");
+    const loadFilesBtn = document.getElementById("loadFilesBtn");
+    const folderInput = document.getElementById("folderInput");
+    const filesInput = document.getElementById("filesInput");
 
     let files = [];
     let currentIndex = -1;
@@ -204,7 +211,11 @@
       if (index < 0 || index >= files.length) return;
       currentIndex = index;
       const track = files[index];
-      audioEl.src = track.url;
+      if (track.objectUrl) {
+        audioEl.src = track.objectUrl;
+      } else {
+        audioEl.src = track.url;
+      }
       nowPlayingEl.textContent = `${index + 1}. ${track.name}`;
       renderPlaylist();
       if (autoplay) {
@@ -226,35 +237,62 @@
       loadTrack(prev, true);
     }
 
-    async function loadPlaylist() {
-      updateStatus("Loading playlist...");
-      try {
-        const response = await fetch("/api/mp3-list", { cache: "no-store" });
-        const data = await response.json();
-        if (!response.ok || !data.ok) {
-          throw new Error(data.error || "failed_to_load_playlist");
+    function clearObjectUrls() {
+      for (const f of files) {
+        if (f.objectUrl) {
+          URL.revokeObjectURL(f.objectUrl);
         }
-
-        files = Array.isArray(data.files) ? data.files : [];
-        if (!files.length) {
-          currentIndex = -1;
-          nowPlayingEl.textContent = "Nothing selected";
-          audioEl.removeAttribute("src");
-          renderPlaylist();
-          updateStatus("No MP3 files found in downloads_mp3.");
-          return;
-        }
-
-        if (currentIndex < 0 || currentIndex >= files.length) {
-          currentIndex = 0;
-        }
-
-        renderPlaylist();
-        loadTrack(currentIndex, false);
-        updateStatus("Playlist ready.");
-      } catch (error) {
-        updateStatus(`Error: ${error.message}`);
       }
+    }
+
+    function setFilesFromFileList(fileList) {
+      const picked = Array.from(fileList || [])
+        .filter((file) => /\.mp3$/i.test(file.name))
+        .map((file) => ({
+          name: file.webkitRelativePath || file.name,
+          objectUrl: URL.createObjectURL(file),
+        }));
+
+      clearObjectUrls();
+      files = picked.sort((a, b) => a.name.localeCompare(b.name, undefined, { numeric: true, sensitivity: "base" }));
+
+      if (!files.length) {
+        currentIndex = -1;
+        nowPlayingEl.textContent = "Nothing selected";
+        audioEl.removeAttribute("src");
+        renderPlaylist();
+        updateStatus("No MP3 files selected.");
+        return;
+      }
+
+      currentIndex = 0;
+      renderPlaylist();
+      loadTrack(currentIndex, false);
+      updateStatus(`Playlist loaded: ${files.length} track(s).`);
+    }
+
+    function setFilesFromGeneratedPlaylist() {
+      const list = Array.isArray(window.MP3_PLAYLIST) ? window.MP3_PLAYLIST : [];
+      if (!list.length) {
+        updateStatus("No generated playlist found. Click Load Folder or Load Files.");
+        return;
+      }
+
+      clearObjectUrls();
+      files = list
+        .filter((x) => x && typeof x.name === "string" && typeof x.url === "string")
+        .map((x) => ({ name: x.name, url: x.url }))
+        .sort((a, b) => a.name.localeCompare(b.name, undefined, { numeric: true, sensitivity: "base" }));
+
+      if (!files.length) {
+        updateStatus("Generated playlist is empty.");
+        return;
+      }
+
+      currentIndex = 0;
+      renderPlaylist();
+      loadTrack(currentIndex, false);
+      updateStatus(`Auto-loaded downloads_mp3 playlist: ${files.length} track(s).`);
     }
 
     prevBtn.addEventListener("click", prevTrack);
@@ -270,11 +308,20 @@
         audioEl.pause();
       }
     });
-    reloadBtn.addEventListener("click", loadPlaylist);
+    loadFolderBtn.addEventListener("click", () => {
+      folderInput.value = "";
+      folderInput.click();
+    });
+    loadFilesBtn.addEventListener("click", () => {
+      filesInput.value = "";
+      filesInput.click();
+    });
+    folderInput.addEventListener("change", (event) => setFilesFromFileList(event.target.files));
+    filesInput.addEventListener("change", (event) => setFilesFromFileList(event.target.files));
 
     audioEl.addEventListener("ended", () => nextTrack(true));
 
-    loadPlaylist();
+    setFilesFromGeneratedPlaylist();
   </script>
 </body>
 </html>

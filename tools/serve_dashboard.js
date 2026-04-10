@@ -218,7 +218,10 @@ function detectFfmpeg() {
         };
     }
 
-    const firstLine = String(probe.stdout || "").split(/\r?\n/).find(Boolean) || "ffmpeg available";
+    const firstLine =
+        String(probe.stdout || "")
+            .split(/\r?\n/)
+            .find(Boolean) || "ffmpeg available";
     return {
         available: true,
         version: firstLine,
@@ -230,20 +233,52 @@ function detectFfmpeg() {
     };
 }
 
-function listMp3Files() {
-    const dir = path.resolve(ROOT, "downloads_mp3");
-    if (!dir.startsWith(ROOT) || !fs.existsSync(dir) || !fs.statSync(dir).isDirectory()) {
-        return [];
-    }
+function escapeHtml(value) {
+    return String(value).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/\"/g, "&quot;");
+}
 
-    return fs
-        .readdirSync(dir)
-        .filter((name) => /\.mp3$/i.test(name))
-        .sort((a, b) => a.localeCompare(b, undefined, { numeric: true, sensitivity: "base" }))
-        .map((name) => ({
-            name,
-            url: `/downloads_mp3/${encodeURIComponent(name)}`,
-        }));
+function renderDirectoryListing(urlPath, folderPath) {
+    const entries = fs
+        .readdirSync(folderPath, { withFileTypes: true })
+        .map((entry) => ({
+            name: entry.name,
+            isDirectory: entry.isDirectory(),
+        }))
+        .sort((a, b) => {
+            if (a.isDirectory !== b.isDirectory) return a.isDirectory ? -1 : 1;
+            return a.name.localeCompare(b.name, undefined, { numeric: true, sensitivity: "base" });
+        });
+
+    const normalizedPath = urlPath.endsWith("/") ? urlPath : `${urlPath}/`;
+    const links = entries
+        .map((entry) => {
+            const suffix = entry.isDirectory ? "/" : "";
+            const href = `${normalizedPath}${encodeURIComponent(entry.name)}${suffix}`;
+            const label = `${entry.name}${suffix}`;
+            return `<li><a href="${escapeHtml(href)}">${escapeHtml(label)}</a></li>`;
+        })
+        .join("\n");
+
+    return `<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Index of ${escapeHtml(normalizedPath)}</title>
+  <style>
+    body { font-family: Arial, sans-serif; max-width: 900px; margin: 24px auto; padding: 0 12px; }
+    h1 { font-size: 1.1rem; }
+    ul { list-style: none; padding: 0; }
+    li { margin: 4px 0; }
+  </style>
+</head>
+<body>
+  <h1>Index of ${escapeHtml(normalizedPath)}</h1>
+  <ul>
+${links}
+  </ul>
+</body>
+</html>`;
 }
 
 const server = http.createServer((req, res) => {
@@ -349,25 +384,6 @@ const server = http.createServer((req, res) => {
         return;
     }
 
-    if (url.pathname === "/api/mp3-list") {
-        if (method === "OPTIONS") {
-            sendRunJson(res, 204, { ok: true });
-            return;
-        }
-
-        if (method === "GET") {
-            sendRunJson(res, 200, { ok: true, files: listMp3Files() });
-            return;
-        }
-
-        sendRunJson(res, 405, {
-            ok: false,
-            error: "method_not_allowed",
-            details: "Use GET /api/mp3-list",
-        });
-        return;
-    }
-
     const filePath = safePath(req.url || "/");
     if (!filePath) {
         res.writeHead(400);
@@ -375,9 +391,31 @@ const server = http.createServer((req, res) => {
         return;
     }
 
-    if (!fs.existsSync(filePath) || fs.statSync(filePath).isDirectory()) {
+    if (!fs.existsSync(filePath)) {
         res.writeHead(404, { "Content-Type": "text/plain; charset=utf-8" });
         res.end("Not found");
+        return;
+    }
+
+    if (fs.statSync(filePath).isDirectory()) {
+        if (method !== "GET" && method !== "HEAD") {
+            res.writeHead(405, { "Content-Type": "text/plain; charset=utf-8" });
+            res.end("Method not allowed");
+            return;
+        }
+
+        const html = renderDirectoryListing(url.pathname, filePath);
+        res.writeHead(200, {
+            "Content-Type": "text/html; charset=utf-8",
+            "Cache-Control": "no-store, no-cache, must-revalidate, max-age=0",
+            Pragma: "no-cache",
+            Expires: "0",
+        });
+        if (method === "HEAD") {
+            res.end();
+            return;
+        }
+        res.end(html);
         return;
     }
 
